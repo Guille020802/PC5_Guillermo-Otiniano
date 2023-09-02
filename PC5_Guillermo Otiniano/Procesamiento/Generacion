@@ -1,0 +1,22 @@
+
+import matplotlib.pyplot as plt
+
+import pandas as pd
+import sqlite3
+
+# Conectar a la base de datos SQLite
+conn = sqlite3.connect('candidates.db')
+
+# Realizar procesamiento de datos (ejemplo: calcular estadísticas)
+query = "SELECT Country, AVG(Yoe) AS Avg_Yoe FROM candidates_data GROUP BY Country"
+average_yoe_by_country = pd.read_sql_query(query, conn)
+
+# Generar un gráfico de barras de las estadísticas
+plt.bar(average_yoe_by_country['Country'], average_yoe_by_country['Avg_Yoe'])
+plt.xlabel('País')
+plt.ylabel('Experiencia promedio (años)')
+plt.title('Experiencia promedio por país')
+plt.show()
+
+# Cerrar la conexión a la base de datos
+conn.close()
